@@ -1,0 +1,31 @@
+pre{
+  margin: 0 !important;
+}
+.app-table-middle td{
+  vertical-align: middle !important;
+}
+.apk-upload .upload-area{
+  position: relative;
+  width:80px;
+  height:30px;
+  overflow: hidden;
+}
+.apk-upload .upload-area:hover .glyphicon-cloud-upload{
+  color:#44af99;
+  transition: color 0.2s ease-in;
+}
+.apk-upload .upload-area .glyphicon-cloud-upload,
+.apk-upload .upload-area .file-upload{
+  cursor: pointer;
+  position: absolute;
+}
+.apk-upload .upload-area .glyphicon-cloud-upload{
+  z-index:0;
+  opacity: 1;
+  font-size:25px;
+}
+.apk-upload .upload-area .file-upload{
+  font-size:100px;
+  opacity: 0;
+  z-index:1;
+}
