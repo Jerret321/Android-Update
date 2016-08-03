@@ -1,0 +1,9 @@
+<tr>
+  <td>{{loop.index}}</td>
+  <td><a title="{{apk.version}}版本" href="{{apk.url}}">{{apk.version}}</a></td>
+  <td>{{apk.log | decodeURI}}</td>
+  <td>{{apk.create_time|datetime}}</td>
+  <td>
+    <a href="/apk/edit?id={{apk.id}}&app_id={{apk.app_id}}">编辑</a>
+  </td>
+</tr>

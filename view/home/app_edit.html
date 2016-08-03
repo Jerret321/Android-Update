@@ -1,0 +1,62 @@
+{% extends '../common/layout.html' %}
+{% block title %}
+编辑app
+{% endblock %}
+
+{% block content %}
+<div class="col-lg-12">
+  <div class="ibox-content">
+    <form method="post" action="/app/edit/{{current_app.id}}" class="form-horizontal">
+      <div class="form-group">
+        <label class="col-sm-2 control-label">应用名称</label>
+        <div class="col-sm-10"><input type="text" value="{{current_app.name | decodeURI}}" name="name" class="form-control"></div>
+      </div>
+      <div class="form-group"><label class="col-sm-2 control-label">应用类型</label>
+        <div class="col-sm-10">
+          <select class="form-control m-b" name="os">
+            {% for os in os_types %}
+            <option {%if current_app.os == os.type %} selected {% endif %} value="{{os.type}}">{{os.name}}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">应用描述</label>
+        <div class="col-sm-10"><textarea name="description" class="form-control">{{current_app.description | decodeURI}}</textarea></div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">应用logo</label>
+        <div class="col-sm-10"><input value="{{current_app.logo}}" type="text" name="logo" placeholder="请输入logo url" class="form-control"></div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">是否强制更新</label>
+        <div class="col-sm-10">
+          <input style="margin-top:10px;" type="checkbox" {% if current_app.is_force_upate == 1 %} checked {% endif %} name="is_force_update" id="">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">应用key</label>
+        <div class="col-sm-10"><input value="{{current_app.key}}" type="text" disabled class="form-control"></div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">应用secret</label>
+        <div class="col-sm-10"><input value="{{current_app.secret}}" type="text" disabled class="form-control"></div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">备注</label>
+        <div class="col-sm-10">
+          <p style="margin-top:6.5px;" class="text-warning">应用key, 应用secret 用于用户获取最新的APK信息, 请妥善保管</p>
+        </div>
+      </div>
+      <div class="hr-line-dashed"></div>
+      <input type="hidden" name="uid" value="{{user.id}}">
+      <div class="form-group">
+        <div class="col-sm-4 col-sm-offset-2">
+          <!--<button class="btn btn-white" type="reset">重置</button>-->
+          <button class="btn btn-primary" type="submit">保存</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

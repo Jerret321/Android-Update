@@ -1,0 +1,105 @@
+{% extends '../common/layout.html' %}
+{% block title %}
+添加app
+{% endblock %}
+{% block content %}
+
+{% include '../common/application/head.html' %}
+<div class="col-lg-12">
+  <div class="ibox-content">
+    <form method="post" action="/apk/add" class="form-horizontal">
+      <div class="form-group">
+        <label class="col-sm-2 control-label">应用名称</label>
+        <div class="col-sm-10"><input value="{{current_app.name | decodeURI}}" type="text" disabled  class="form-control"></div>
+      </div>
+      <div class="form-group"><label class="col-sm-2 control-label">应用类型</label>
+        <div class="col-sm-10">
+          <select disabled class="form-control m-b">
+            {% for os in os_types %}
+            <option {% if current_app.os== os.type %} selected {% endif %} value="{{os.type}}">{{os.name}}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">应用版本号</label>
+        <div class="col-sm-2">
+          <input name="version" type="text" class="form-control">
+        </div>
+        <div class="col-sm-8">
+          <p style="margin-top:7px;"><span class="text-danger">版本号: 如 0.2.1</span> <span class="text-warning">应用版本号用于在app上显示给用户查看,方便查看bug等. </span>
+          </p>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">应用更新LOG</label>
+        <div class="col-sm-10"><textarea rows="4" name="log" placeholder="请输入本次更新的改动记录" class="form-control"></textarea>
+        </div>
+      </div>
+      <div class="form-group apk-upload">
+        <label class="col-sm-2 control-label">上传apk</label>
+        <div class="col-sm-10 upload-area">
+          <span title="上传apk" class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span>
+          <input type="file" accept=".apk" name="" class="file-upload" id="file-upload">
+        </div>
+
+      </div>
+      <div class="form-group" id="apk-info" style="display: none">
+        <label class="col-sm-2 control-label">解析apk信息</label>
+        <div class="col-sm-10">
+          <pre></pre>
+        </div>
+      </div>
+      <div class="hr-line-dashed"></div>
+      <input type="hidden" name="upload_id" id="upload_id">
+      <input type="hidden" name="uid" value="{{user.id}}">
+      <input type="hidden" name="app_id" id="app-id" value="{{current_app.id}}">
+      <div class="form-group">
+        <div class="col-sm-4 col-sm-offset-2">
+          <button class="btn btn-white" type="reset">重置</button>
+          <button class="btn btn-primary" type="submit">添加</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+
+{% block js %}
+<script>
+  $(function (){
+    var app_id = $('#app-id').val();
+    $('#file-upload').on('change', function (e){
+      var self = this;
+      var fd = new FormData();
+      var files = e.target.files;
+      if (files.length > 0){
+        fd.append('apk', files[0]);
+        fd.append('app_id', app_id);
+      } else{
+        return;
+      }
+      $.ajax({
+        url: '/api/apk/post',
+        type: 'POST',
+        cache: false,
+        data: fd,
+        processData: false,
+        contentType: false
+      }).done(function (res){
+        self.value = '';
+        console.log(res);
+        if(res.code == 0){
+          $('#upload_id').val(res.data.upload_id);
+          $('#apk-info pre').text(res.data.options);
+          $('#apk-info').show();
+        }
+      }).fail(function (res){
+        self.value = '';
+      });
+    });
+  });
+</script>
+{% endblock %}

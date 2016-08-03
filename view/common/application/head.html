@@ -1,0 +1,10 @@
+<div class="col-lg-12" style="overflow: hidden; margin-bottom:10px;">
+  <h3 class="col-sm-9">{{current_app.name | decodeURI }} apk上传 </h3>
+  {% if current_app %}
+    <a class="btn btn-primary" style="margin-left:5px;"  href="/app/edit?id={{current_app.id}}">编辑app信息</a>
+  {% endif %}
+  {% if apk_list|length %}
+  <a class="btn btn-primary" href="/apk/add?app_id={{current_app.id}}">添加apk</a>
+  <a class="btn btn-info" href="/share/{{current_app.id}}">分享</a>
+  {% endif %}
+</div>

@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{current_app.name | decodeURI}}</title>
+  <meta name=description content="{{current_app.description | decodeURI}}">
+  <meta name=viewport content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"><meta name="format-detection" content="telephone=no">
+</head>
+<body>
+{{current_app.logo | decodeURI}} <br>
+{{current_app.name | decodeURI}} <br>
+{% for os in os_types %}
+{%if current_app.os == os.type %} {{os.name}} {% endif %}
+{% endfor %}
+<br>
+{{current_app.description | decodeURI}}<br>
+version: {{current_apk.version}}<br>
+<canvas data-uri="{{current_apk.url}}" id="qr"></canvas>
+<script src="/static/js/qrious.min.js"></script>
+<script>
+  var uri = document.getElementById('qr').getAttribute('data-uri');
+  console.log(uri);
+  var qr = new QRious({
+    element: document.getElementById('qr'),
+    value: window.location.origin + uri,
+    level: 'M',
+    size: 200
+  })
+</script>
+</body>
+</html>

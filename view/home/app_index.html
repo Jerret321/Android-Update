@@ -1,0 +1,19 @@
+{% extends '../common/layout.html' %}
+{% block title %}
+首页
+{% endblock %}
+{% block content %}
+<div class="row">
+  {% if current_app %}
+    {% include '../common/application/head.html' %}
+    {% if apk_list|length  %}
+      {% include '../common/apk/index.html' %}
+    {% else%}
+      {% include '../common/apk/empty.html' %}
+    {% endif %}
+  {% else %}
+    {% include '../common/application/empty.html' %}
+  {% endif %}
+</div>
+
+{% endblock %}
