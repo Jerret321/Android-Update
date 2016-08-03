@@ -3,7 +3,7 @@
 export default class extends think.controller.base {
 	async __before(){
 		const ignore_list = ['user', 'share'];
-		if (ignore_list.indexOf(this.http.controller) > -1 ){
+		if (ignore_list.indexOf(this.http.controller) > -1){
 			return;
 		}
 		var current_user = await this.session('current_user');
@@ -19,9 +19,9 @@ export default class extends think.controller.base {
 			this.http.query.id &&
 			['edit', 'index'].indexOf(this.http.action) > -1){
 			current_app = appModel.get_info(this.http.query.id);
-		} else if(this.http.controller == 'apk' &&
-				this.http.query.app_id
-		) {
+		} else if (this.http.controller == 'apk' &&
+			this.http.query.app_id
+		){
 			current_app = appModel.get_info(this.http.query.app_id);
 		}
 		this.assign('os_types', global.OS_TYPES);
