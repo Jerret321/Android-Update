@@ -25,7 +25,7 @@ export default class extends think.controller.base {
 			current_app = appModel.get_info(this.http.query.app_id);
 		}
 		this.assign('os_types', global.OS_TYPES);
-		const role = current_user.role == 2 ? '管理员' : '开发者';
+		const role = current_user && current_user.role == 2 ? '管理员' : '开发者';
 		this.assign('user', think.extend(false, current_user, {role: role}));
 		this.assign('current_app', current_app);
 		this.assign('app_list', app_list);
