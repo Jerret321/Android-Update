@@ -37,8 +37,9 @@ export default class extends Base {
 			await this.session('current_user', user_info);
 			if (this.http.isAjax()){
 				return this.success('LOGIN_SUCCESS');
+			} else {
+				this.redirect('/app');
 			}
-			this.redirect('/app');
 
 		} else{
 			this.display();
