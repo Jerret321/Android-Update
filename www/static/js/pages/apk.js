@@ -10,11 +10,12 @@ $(function (){
 		} else{
 			return;
 		}
+		e.target.value = '';
 		$.ajax({
-			xhr: function() {
+			xhr: function (){
 				var xhr = new window.XMLHttpRequest();
-				xhr.upload.addEventListener("progress", function(evt) {
-					if (evt.lengthComputable) {
+				xhr.upload.addEventListener("progress", function (evt){
+					if (evt.lengthComputable){
 						var percentComplete = (evt.loaded / evt.total).toFixed(2);
 						var percent = percentComplete * 100 + '%';
 						$('#progress').css({
@@ -34,7 +35,7 @@ $(function (){
 		}).done(function (res){
 			self.value = '';
 			console.log(res);
-			if(res.code == 0){
+			if (res.code == 0){
 				$('#upload_id').val(res.data.upload_id);
 				$('#apk-info pre').text(res.data.options);
 				$('#progress').html('').parent().hide();
